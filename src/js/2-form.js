@@ -4,8 +4,8 @@ feedbackForm.addEventListener('input', onFormInput);
 feedbackForm.addEventListener('submit', onFormSubmit);
 
 function onFormInput(event) {
-  const email = feedbackForm.elements.email.value;
-  const message = feedbackForm.elements.message.value;
+  const email = feedbackForm.elements.email.value.trim();
+  const message = feedbackForm.elements.message.value.trim();
   const formData = {
     email,
     message,
@@ -29,15 +29,19 @@ function loadFromLs(key) {
 
 function onFormSubmit(event) {
   event.preventDefault();
-  const email = feedbackForm.elements.email.value;
-  const message = feedbackForm.elements.message.value;
-  const formData = {
-    email,
-    message,
-  };
-  console.log(formData);
-  localStorage.removeItem('feedback-form-state');
-  feedbackForm.reset();
+  const email = feedbackForm.elements.email.value.trim();
+  const message = feedbackForm.elements.message.value.trim();
+  if (email !== '' && message !== '') {
+    const formData = {
+      email,
+      message,
+    };
+    console.log(formData);
+    localStorage.removeItem('feedback-form-state');
+    feedbackForm.reset();
+  } else {
+    return;
+  }
 }
 
 function initPage() {
